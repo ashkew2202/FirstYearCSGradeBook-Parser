@@ -10,6 +10,7 @@ import (
 )
 
 func main() {
+
 	fmt.Println(os.Args[1])
 	f, err := excelize.OpenFile(os.Args[1])
 	if err != nil {
@@ -21,7 +22,8 @@ func main() {
 		fmt.Println(err)
 		return
 	}
-	fmt.Println(rows[1][4])
+	fmt.Println("Total number of students: ", len(rows)-1)
+	fmt.Println("----------------------------------------------------------------")
 	numberOfStudents := len(rows) - 1 // No of students in A group
 	// Will store the student's total marks of every component of the course
 	studentMarks := make([]float64, numberOfStudents) // 0th index is irrelevant
@@ -234,6 +236,7 @@ func main() {
 			fmt.Println(err)
 			return
 		}
+		var realtotal float64 = quizMarks + midsemMarks + labtestMarks + weeklylabMarks + compreevalMarks
 		if midsemMarks > midsemr1 {
 			for j := 0; j < 11; j++ {
 				midsemrank[2][j] = midsemrank[1][j]
@@ -298,18 +301,18 @@ func main() {
 				comprerank[2][j] = rows[i][j]
 			}
 		}
-		if b > finalr1 {
+		if realtotal > finalr1 {
 			for j := 0; j < 11; j++ {
 				finalrank[2][j] = finalrank[1][j]
 				finalrank[1][j] = finalrank[0][j]
 				finalrank[0][j] = rows[i][j]
 			}
-		} else if b > finalr2 {
+		} else if realtotal > finalr2 {
 			for j := 0; j < 11; j++ {
 				finalrank[2][j] = finalrank[1][j]
 				finalrank[1][j] = rows[i][j]
 			}
-		} else if b > finalr3 {
+		} else if realtotal > finalr3 {
 			for j := 0; j < 11; j++ {
 				finalrank[2][j] = rows[i][j]
 			}
@@ -376,40 +379,49 @@ func main() {
 	precompreevalavg /= float64(numberOfStudents)
 	compreavg /= float64(numberOfStudents)
 	var expectedtotalavg float64 = quizavg + midsemavg + labtestavg + weeklylabavg + compreavg
+	fmt.Println("----------------------------------------------------------------")
 	fmt.Println("Expected Total Average: ", expectedtotalavg)
 	fmt.Println("Quiz Average: ", quizavg)
 	fmt.Println("Midsem Average: ", midsemavg)
 	fmt.Println("Lab Test Average: ", labtestavg)
 	fmt.Println("Weekly Lab Average: ", weeklylabavg)
-	fmt.Println("Final Average: ", finalavg)
 	fmt.Println("Precompre Evaluation Average: ", precompreevalavg)
 	fmt.Println("Compre Average: ", compreavg)
+	fmt.Println("Final Average: ", finalavg)
+	fmt.Println("----------------------------------------------------------------")
 	fmt.Println("Quiz Rank: ")
 	for i := 0; i < 3; i++ {
-		fmt.Println("Rank #", i+1, "Marks: ", quizrank[i][4], "ID: ", quizrank[i][3], "Emplid: ", quizrank[i][2])
+		fmt.Println("Rank #", i+1, "| Marks: ", quizrank[i][4], "| ID: ", quizrank[i][3], "| Emplid: ", quizrank[i][2])
 	}
+	fmt.Println("----------------------------------------------------------------")
 	fmt.Println("Midsem Rank: ")
 	for i := 0; i < 3; i++ {
-		fmt.Println("Rank #", i+1, "Marks: ", midsemrank[i][5], "ID: ", midsemrank[i][3], "Emplid: ", midsemrank[i][2])
+		fmt.Println("Rank #", i+1, "| Marks: ", midsemrank[i][5], "| ID: ", midsemrank[i][3], "| Emplid: ", midsemrank[i][2])
 	}
+	fmt.Println("----------------------------------------------------------------")
 	fmt.Println("Lab Test Rank: ")
 	for i := 0; i < 3; i++ {
-		fmt.Println("Rank #", i+1, "Marks: ", labtestrank[i][6], "ID: ", labtestrank[i][3], "Emplid: ", labtestrank[i][2])
+		fmt.Println("Rank #", i+1, "| Marks: ", labtestrank[i][6], "| ID: ", labtestrank[i][3], "| Emplid: ", labtestrank[i][2])
 	}
+	fmt.Println("----------------------------------------------------------------")
 	fmt.Println("Weekly Lab Rank: ")
 	for i := 0; i < 3; i++ {
-		fmt.Println("Rank #", i+1, "Marks: ", weeklylabrank[i][7], "ID: ", weeklylabrank[i][3], "Emplid: ", weeklylabrank[i][2])
+		fmt.Println("Rank #", i+1, "| Marks: ", weeklylabrank[i][7], "| ID: ", weeklylabrank[i][3], "| Emplid: ", weeklylabrank[i][2])
 	}
-	fmt.Println("Compre Rank: ")
-	for i := 0; i < 3; i++ {
-		fmt.Println("Rank #", i+1, "Marks: ", comprerank[i][10], "ID: ", comprerank[i][3], "Emplid: ", comprerank[i][2])
-	}
-	fmt.Println("Final Rank: ")
-	for i := 0; i < 3; i++ {
-		fmt.Println("Rank #", i+1, "Marks: ", finalrank[i][10], "ID: ", finalrank[i][3], "Emplid: ", finalrank[i][2])
-	}
+	fmt.Println("----------------------------------------------------------------")
 	fmt.Println("Precompre Rank: ")
 	for i := 0; i < 3; i++ {
-		fmt.Println("Rank #", i+1, "Marks: ", precomprerank[i][8], "ID: ", precomprerank[i][3], "Emplid: ", precomprerank[i][2])
+		fmt.Println("Rank #", i+1, "| Marks: ", precomprerank[i][8], "| ID: ", precomprerank[i][3], "| Emplid: ", precomprerank[i][2])
 	}
+	fmt.Println("----------------------------------------------------------------")
+	fmt.Println("Compre Rank: ")
+	for i := 0; i < 3; i++ {
+		fmt.Println("Rank #", i+1, "| Marks: ", comprerank[i][10], "| ID: ", comprerank[i][3], "| Emplid: ", comprerank[i][2])
+	}
+	fmt.Println("----------------------------------------------------------------")
+	fmt.Println("Final Rank: ")
+	for i := 0; i < 3; i++ {
+		fmt.Println("Rank #", i+1, "| Marks: ", finalrank[i][10], "| ID: ", finalrank[i][3], "| Emplid: ", finalrank[i][2])
+	}
+	fmt.Println("----------------------------------------------------------------")
 }
